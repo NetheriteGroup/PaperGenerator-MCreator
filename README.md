@@ -4,6 +4,8 @@ An unofficial plugin for [MCreator](https://mcreator.net/), a code generator for
 ## Features
 * Commands
 * Procedures
+* Custom elements
+* Custom enchantments
 ## Information
 - Make sure you use MCreator 2026.1
 - Plugins also require [Spigot](https://getbukkit.org/download/spigot) to function properly.
