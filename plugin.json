@@ -1,0 +1,11 @@
+{
+  "id": "generator-paper-1.21.6",
+  "supportedversions": [2026001],
+  "info": {
+    "name": "Minecraft Paper 1.21.6 Generator",
+    "version": "1.0",
+    "description": "Paper Generator for 1.21.6",
+    "author": "Netherite Group",
+    "credits": "Based on Goldorion's paper generator 1.21.8"
+  }
+}

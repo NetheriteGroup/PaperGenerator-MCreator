@@ -1,0 +1,134 @@
+_default:
+  - Enchantment.EFFICIENCY
+  - efficiency
+_mcreator_map_template:
+  - "@JavaModNameEnchantments.getEnchantment(\"@registryname\")"
+  - "ResourceKey.create(Registries.ENCHANTMENT, ResourceLocation.parse(\"@modid:@registryname\"))"
+  - "@modid:@registryname"
+_bypass_prefix: "#"
+PROTECTION:
+  - Enchantment.PROTECTION
+  - protection
+FIRE_PROTECTION:
+  - Enchantment.FIRE_PROTECTION
+  - fire_protection
+FEATHER_FALLING:
+  - Enchantment.FEATHER_FALLING
+  - feather_falling
+BLAST_PROTECTION:
+  - Enchantment.BLAST_PROTECTION
+  - blast_protection
+PROJECTILE_PROTECTION:
+  - Enchantment.PROJECTILE_PROTECTION
+  - projectile_protection
+RESPIRATION:
+  - Enchantment.RESPIRATION
+  - respiration
+AQUA_AFFINITY:
+  - Enchantment.AQUA_AFFINITY
+  - aqua_affinity
+THORNS:
+  - Enchantment.THORNS
+  - thorns
+DEPTH_STRIDER:
+  - Enchantment.DEPTH_STRIDER
+  - depth_strider
+FROST_WALKER:
+  - Enchantment.FROST_WALKER
+  - frost_walker
+BINDING_CURSE:
+  - Enchantment.BINDING_CURSE
+  - binding_curse
+SOUL_SPEED:
+  - Enchantment.SOUL_SPEED
+  - soul_speed
+SWIFT_SNEAK:
+  - Enchantment.SWIFT_SNEAK
+  - swift_sneak
+SHARPNESS:
+  - Enchantment.SHARPNESS
+  - sharpness
+SMITE:
+  - Enchantment.SMITE
+  - smite
+BANE_OF_ARTHROPODS:
+  - Enchantment.BANE_OF_ARTHROPODS
+  - bane_of_arthropods
+KNOCKBACK:
+  - Enchantment.KNOCKBACK
+  - knockback
+FIRE_ASPECT:
+  - Enchantment.FIRE_ASPECT
+  - fire_aspect
+LOOTING:
+  - Enchantment.LOOTING
+  - looting
+SWEEPING:
+  - Enchantment.SWEEPING_EDGE
+  - sweeping_edge
+EFFICIENCY:
+  - Enchantment.EFFICIENCY
+  - efficiency
+SILK_TOUCH:
+  - Enchantment.SILK_TOUCH
+  - silk_touch
+UNBREAKING:
+  - Enchantment.UNBREAKING
+  - unbreaking
+FORTUNE:
+  - Enchantment.FORTUNE
+  - fortune
+POWER:
+  - Enchantment.POWER
+  - power
+PUNCH:
+  - Enchantment.PUNCH
+  - punch
+FLAME:
+  - Enchantment.FLAME
+  - flame
+INFINITY:
+  - Enchantment.INFINITY
+  - infinity
+LUCK_OF_THE_SEA:
+  - Enchantment.LUCK_OF_THE_SEA
+  - luck_of_the_sea
+LURE:
+  - Enchantment.LURE
+  - lure
+LOYALTY:
+  - Enchantment.LOYALTY
+  - loyalty
+IMPALING:
+  - Enchantment.IMPALING
+  - impaling
+RIPTIDE:
+  - Enchantment.RIPTIDE
+  - riptide
+CHANNELING:
+  - Enchantment.CHANNELING
+  - channeling
+MULTISHOT:
+  - Enchantment.MULTISHOT
+  - multishot
+QUICK_CHARGE:
+  - Enchantment.QUICK_CHARGE
+  - quick_charge
+PIERCING:
+  - Enchantment.PIERCING
+  - piercing
+DENSITY:
+  - Enchantment.DENSITY
+  - density
+BREACH:
+  - Enchantment.BREACH
+  - breach
+WIND_BURST:
+  - Enchantment.WIND_BURST
+  - wind_burst
+MENDING:
+  - Enchantment.MENDING
+  - mending
+VANISHING_CURSE:
+  - Enchantment.VANISHING_CURSE
+  - vanishing_curse

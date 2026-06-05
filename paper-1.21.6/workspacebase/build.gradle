@@ -1,0 +1,115 @@
+import groovy.json.JsonSlurper
+
+plugins {
+	id "java"
+}
+
+base.archivesName = "plugin"
+
+def toolsDir = layout.projectDirectory.dir("build/tools")
+def runDir = layout.projectDirectory.dir("run")
+def pluginsDir = runDir.dir("plugins")
+def paperJar = runDir.file("paper.jar")
+
+repositories {
+	mavenCentral()
+	maven {
+		name = "papermc-repo"
+		url = "https://repo.papermc.io/repository/maven-public/"
+	}
+}
+
+dependencies {
+	compileOnly("io.papermc.paper:paper-api:${generator.getGeneratorMinecraftVersion()}-R0.1-SNAPSHOT")
+}
+
+def javaVersion = JavaVersion.VERSION_21
+
+java {
+	sourceCompatibility = javaVersion
+	targetCompatibility = javaVersion
+	toolchain.languageVersion = JavaLanguageVersion.of(javaVersion.toString())
+}
+
+tasks.withType(JavaCompile).configureEach {
+	options.release = javaVersion.toString() as Integer
+}
+
+tasks.register('prepareDirs') {
+	group 'paper'
+	doLast {
+		toolsDir.asFile.mkdirs()
+		pluginsDir.asFile.mkdirs()
+	}
+}
+
+// АВТОМАТИЗИРОВАНО: Если билд из настроек выдает ошибку, Gradle сам найдет последний рабочий билд
+tasks.register('downloadPaper') {
+	group 'paper'
+	dependsOn 'prepareDirs'
+
+	doLast {
+		if (!paperJar.asFile.exists()) {
+			def paperUrl = "https://api.papermc.io/v2/projects/paper/versions/${generator.getGeneratorMinecraftVersion()}/builds/${generator.getGeneratorBuildFileVersion()}/downloads/paper-${generator.getGeneratorMinecraftVersion()}-${generator.getGeneratorBuildFileVersion()}.jar"
+			
+			try {
+				println "Trying to download Paper build ${generator.getGeneratorBuildFileVersion()}..."
+				new URL(paperUrl).withInputStream { i ->
+					paperJar.asFile.withOutputStream { it << i }
+				}
+			} catch (FileNotFoundException e) {
+				println "Build ${generator.getGeneratorBuildFileVersion()} not found. Auto-detecting the latest available build for Minecraft ${generator.getGeneratorMinecraftVersion()}..."
+				
+				try {
+					// Обращаемся к API PaperMC, чтобы узнать список существующих билдов
+					def apiUrl = "https://api.papermc.io/v2/projects/paper/versions/${generator.getGeneratorMinecraftVersion()}"
+					def json = new JsonSlurper().parseText(new URL(apiUrl).text)
+					def latestBuild = json.builds.max() // Находим самый большой (последний) номер сборки
+					
+					def fallbackUrl = "https://api.papermc.io/v2/projects/paper/versions/${generator.getGeneratorMinecraftVersion()}/builds/" + latestBuild + "/downloads/paper-${generator.getGeneratorMinecraftVersion()}-" + latestBuild + ".jar"
+					
+					println "Downloading latest stable Paper build (" + latestBuild + ") from: " + fallbackUrl
+					new URL(fallbackUrl).withInputStream { i ->
+						paperJar.asFile.withOutputStream { it << i }
+					}
+				} catch (Exception ex) {
+					throw new GradleException("Failed to auto-download Paper jar: " + ex.getMessage(), ex)
+				}
+			}
+		}
+	}
+}
+
+tasks.register('buildPaper') {
+	group 'paper'
+	dependsOn tasks.downloadPaper
+	doLast {
+		println "Paper server jar is verified and ready."
+	}
+}
+
+tasks.register('copyPlugin', Copy) {
+	group 'paper'
+	dependsOn tasks.named('jar')
+
+	from layout.buildDirectory.file("libs/plugin.jar")
+	into layout.projectDirectory.dir("run/plugins")
+}
+
+tasks.register('runPaperServer', Exec) {
+	group 'paper'
+	dependsOn tasks.build
+	dependsOn tasks.copyPlugin
+
+	workingDir = runDir.asFile
+
+	doFirst {
+		def eulaFile = runDir.file("eula.txt").asFile
+		if (!eulaFile.exists()) {
+			eulaFile.parentFile.mkdirs()
+			eulaFile.text = "eula=true\n"
+		}
+	}
+
+	commandLine = ["java", "-Xmx2G", "-jar", paperJar.asFile.absolutePath, "--nogui"]
+}

@@ -1,0 +1,5 @@
+global_templates:
+  - template: elementinits/enchantments.java.ftl
+    name: "@SRCROOT/@BASEPACKAGEPATH/init/@JavaModNameEnchantments.java"
+
+field_exclusions: [damageModifier, incompatibleEnchantments, isTreasureEnchantment, isCurse, canGenerateInLootTables, canVillagerTrade]
